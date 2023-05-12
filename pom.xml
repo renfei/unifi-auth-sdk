@@ -7,6 +7,8 @@
     <groupId>net.renfei</groupId>
     <artifactId>unifi-auth-sdk</artifactId>
     <version>1.0.0</version>
+    <name>UnifiAuthSDK</name>
+    <url>https://github.com/renfei/unifi-auth-sdk</url>
     <description>统一认证平台SDK集成开发包</description>
 
     <licenses>
