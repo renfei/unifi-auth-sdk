@@ -1,5 +1,6 @@
 package net.renfei.unifiauth.sdk.service;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import net.renfei.unifiauth.sdk.UnifiAuthClient;
 import net.renfei.unifiauth.sdk.constant.HttpStatus;
 import net.renfei.unifiauth.sdk.entity.ApiResult;
@@ -24,11 +25,12 @@ public class UserService {
         if (!UNIFI_AUTH_CLIENT.UNIFI_AUTH_SERVER_URI.endsWith(UnifiAuthClient.URI_SEPARATOR)) {
             url.append(UnifiAuthClient.URI_SEPARATOR);
         }
-        url.append("profile");
+        url.append("resource/profile");
         URI uri = new URI(url.toString());
         HttpClientUtils httpClientUtils = new HttpClientUtils();
         String result = httpClientUtils.get(uri, token);
-        ApiResult<UserProfile> apiResult = JSONUtils.json2pojo(result, ApiResult.class);
+        ApiResult<UserProfile> apiResult = JSONUtils.json2pojo(result, new TypeReference<ApiResult<UserProfile>>() {
+        });
         if (apiResult.getCode() == HttpStatus.SUCCESS) {
             return apiResult.getData();
         } else {

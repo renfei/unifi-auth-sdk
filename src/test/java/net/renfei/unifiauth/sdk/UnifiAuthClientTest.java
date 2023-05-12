@@ -2,6 +2,7 @@ package net.renfei.unifiauth.sdk;
 
 import net.renfei.unifiauth.sdk.entity.AccessTokenDataObject;
 import net.renfei.unifiauth.sdk.entity.UserProfile;
+import net.renfei.unifiauth.sdk.oauth2.Scopes;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -27,7 +28,7 @@ public class UnifiAuthClientTest {
                 // 客户端密码
                 "password",
                 // 客户端回调地址（接收授权码）
-                "https://www.baidu.com"
+                "http://localhost:8861/authenticate"
         );
     }
 
@@ -37,7 +38,7 @@ public class UnifiAuthClientTest {
     @Test
     public void generateAuthorizeRequestUrl() {
         Set<String> scopes = new HashSet<>();
-        scopes.add("user.read");
+        scopes.add(Scopes.PROFILE);
         String s = unifiAuthClient.generateAuthorizeRequestUrl(scopes, "123");
         System.out.println(s);
     }

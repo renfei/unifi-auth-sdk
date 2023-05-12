@@ -91,6 +91,10 @@ public class JSONUtils {
         return OBJECT_MAPPER.readValue(jsonString, clazz);
     }
 
+    public static <T> T json2pojo(String jsonArrayStr, TypeReference<T> typeReference) throws Exception {
+        return OBJECT_MAPPER.readValue(jsonArrayStr, typeReference);
+    }
+
     /**
      * json字符串转换为map
      */

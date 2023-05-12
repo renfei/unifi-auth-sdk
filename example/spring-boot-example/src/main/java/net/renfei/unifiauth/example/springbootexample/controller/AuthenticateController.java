@@ -5,6 +5,8 @@ import net.renfei.unifiauth.sdk.constant.HttpStatus;
 import net.renfei.unifiauth.sdk.entity.AccessTokenDataObject;
 import net.renfei.unifiauth.sdk.entity.ApiResult;
 import net.renfei.unifiauth.sdk.entity.CallbackDataObject;
+import net.renfei.unifiauth.sdk.entity.UserProfile;
+import net.renfei.unifiauth.sdk.oauth2.Scopes;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -34,14 +36,14 @@ public class AuthenticateController {
             // 客户端密码
             "password",
             // 客户端回调地址（接收授权码）
-            "https://localhost:8861/authenticate"
+            "http://localhost:8861/authenticate"
     );
 
     /**
      * 授权范围，请向统一认证平台管理员索要
      */
     private final Set<String> scopes = new HashSet<String>() {{
-        this.add("user.read");
+        this.add(Scopes.PROFILE);
     }};
 
     /**
@@ -53,15 +55,15 @@ public class AuthenticateController {
     @RequestMapping("/")
     public String index(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("username");
-        if (username == null) {
+        String name = (String) session.getAttribute("name");
+        if (name == null) {
             // 未登录，重定向到统一认证平台
-            String authorizeRequestUrl = unifiAuthClient.generateAuthorizeRequestUrl(scopes, null);
+            String authorizeRequestUrl = unifiAuthClient.generateAuthorizeRequestUrl(scopes, "example");
             response.sendRedirect(authorizeRequestUrl);
             return null;
         } else {
             // 已登录，运行业务代码
-            return "你好，" + username + "。";
+            return "你好，" + name + "。";
         }
     }
 
@@ -74,7 +76,7 @@ public class AuthenticateController {
      */
     @ResponseBody
     @RequestMapping("/authenticate")
-    public String authenticate(HttpServletRequest request) throws Exception {
+    public String authenticate(HttpServletRequest request, HttpServletResponse response) throws Exception {
         CallbackDataObject callbackDataObject = unifiAuthClient.handlingCallback(request);
         if (callbackDataObject.getSuccess()) {
             // 用户授权码
@@ -82,16 +84,14 @@ public class AuthenticateController {
             // 使用授权码交换 Token
             AccessTokenDataObject accessTokenDataObject = unifiAuthClient.exchangeToken(code);
             // 使用 Token 获取用户信息
-            ApiResult<String> stringApiResult = unifiAuthClient.queryUserInfo(accessTokenDataObject.getAccessToken());
-            if (stringApiResult.getCode() == HttpStatus.SUCCESS) {
-                // 设置 session
-                HttpSession session = request.getSession();
-                session.setAttribute("username", stringApiResult.getData());
-                return stringApiResult.getData();
-            } else {
-                System.err.println(stringApiResult.getMessage());
-                return stringApiResult.getMessage();
-            }
+            UserProfile userProfile = unifiAuthClient.user().queryUserProfile(accessTokenDataObject.getAccessToken());
+            // 设置 session
+            HttpSession session = request.getSession();
+            session.setAttribute("username", userProfile.getUsername());
+            session.setAttribute("name", userProfile.getName());
+            // 重定向到首页
+            response.sendRedirect("/");
+            return userProfile.getName();
         } else {
             return callbackDataObject.getErrorDescription();
         }

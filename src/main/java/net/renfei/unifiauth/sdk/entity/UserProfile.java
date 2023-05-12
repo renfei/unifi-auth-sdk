@@ -1,6 +1,7 @@
 package net.renfei.unifiauth.sdk.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import net.renfei.unifiauth.sdk.constant.SecretLevelEnum;
 
 import java.io.Serializable;
 
@@ -24,6 +25,8 @@ public class UserProfile implements Serializable {
     private String officePhone;
     @Schema(description = "性别")
     private String gender;
+    @Schema(description = "保密等级")
+    private SecretLevelEnum secretLevel;
 
     public String getUsername() {
         return username;
@@ -73,6 +76,14 @@ public class UserProfile implements Serializable {
         this.gender = gender;
     }
 
+    public SecretLevelEnum getSecretLevel() {
+        return secretLevel;
+    }
+
+    public void setSecretLevel(SecretLevelEnum secretLevel) {
+        this.secretLevel = secretLevel;
+    }
+
     @Override
     public String toString() {
         return "UserProfile{" +
@@ -82,6 +93,7 @@ public class UserProfile implements Serializable {
                 ", officeAddress='" + officeAddress + '\'' +
                 ", officePhone='" + officePhone + '\'' +
                 ", gender='" + gender + '\'' +
+                ", secretLevel=" + secretLevel +
                 '}';
     }
 }
