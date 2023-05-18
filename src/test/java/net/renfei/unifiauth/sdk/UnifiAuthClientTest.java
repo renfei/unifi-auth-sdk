@@ -39,6 +39,7 @@ public class UnifiAuthClientTest {
     public void generateAuthorizeRequestUrl() {
         Set<String> scopes = new HashSet<>();
         scopes.add(Scopes.PROFILE);
+        scopes.add(Scopes.USER_READ);
         String s = unifiAuthClient.generateAuthorizeRequestUrl(scopes, "123");
         System.out.println(s);
     }
