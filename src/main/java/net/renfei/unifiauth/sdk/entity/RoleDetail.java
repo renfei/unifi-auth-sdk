@@ -18,8 +18,12 @@ public class RoleDetail implements Serializable {
     private static final long serialVersionUID = -5194970536302876575L;
     @Schema(description = "角色ID")
     private String id;
+    @Schema(description = "客户端ID")
+    private String clientId;
     @Schema(description = "角色名称")
     private String roleName;
+    @Schema(description = "角色中文名称")
+    private String roleZhName;
     @Schema(description = "角色描述")
     private String roleDescribe;
     @Schema(description = "添加时间")
@@ -44,12 +48,28 @@ public class RoleDetail implements Serializable {
         this.id = id;
     }
 
+    public String getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
+    }
+
     public String getRoleName() {
         return roleName;
     }
 
     public void setRoleName(String roleName) {
         this.roleName = roleName;
+    }
+
+    public String getRoleZhName() {
+        return roleZhName;
+    }
+
+    public void setRoleZhName(String roleZhName) {
+        this.roleZhName = roleZhName;
     }
 
     public String getRoleDescribe() {
@@ -104,7 +124,9 @@ public class RoleDetail implements Serializable {
     public String toString() {
         return "RoleDetail{" +
                 "id='" + id + '\'' +
+                ", clientId='" + clientId + '\'' +
                 ", roleName='" + roleName + '\'' +
+                ", roleZhName='" + roleZhName + '\'' +
                 ", roleDescribe='" + roleDescribe + '\'' +
                 ", addTime=" + addTime +
                 ", updateTime=" + updateTime +
