@@ -38,7 +38,8 @@ public class RoleDetail implements Serializable {
     private Boolean builtInRole;
     @Schema(description = "扩展预留")
     private String extendJson;
-    private List<String> authorityList;
+    @Schema(description = "角色拥有的菜单列表（新增时只需菜单ID即可）")
+    private List<MenuDetail> menuList;
 
     public String getId() {
         return id;
@@ -112,12 +113,12 @@ public class RoleDetail implements Serializable {
         this.extendJson = extendJson;
     }
 
-    public List<String> getAuthorityList() {
-        return authorityList;
+    public List<MenuDetail> getMenuList() {
+        return menuList;
     }
 
-    public void setAuthorityList(List<String> authorityList) {
-        this.authorityList = authorityList;
+    public void setMenuList(List<MenuDetail> menuList) {
+        this.menuList = menuList;
     }
 
     @Override
@@ -132,7 +133,7 @@ public class RoleDetail implements Serializable {
                 ", updateTime=" + updateTime +
                 ", builtInRole=" + builtInRole +
                 ", extendJson='" + extendJson + '\'' +
-                ", authorityList=" + authorityList +
+                ", menuList=" + menuList +
                 '}';
     }
 }
