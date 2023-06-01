@@ -66,4 +66,20 @@ public final class Scopes {
      * 删除菜单
      */
     public static final String MENU_DELETE = "menu.delete";
+    /**
+     * 部门读取
+     */
+    public static final String DEPT_READ = "dept.read";
+    /**
+     * 部门创建
+     */
+    public static final String DEPT_CREATE = "dept.create";
+    /**
+     * 部门编辑
+     */
+    public static final String DEPT_UPDATE = "dept.update";
+    /**
+     * 部门删除
+     */
+    public static final String DEPT_DELETE = "dept.delete";
 }
