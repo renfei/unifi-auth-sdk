@@ -1,6 +1,7 @@
 package net.renfei.unifiauth.sdk;
 
 import net.renfei.unifiauth.sdk.entity.AccessTokenDataObject;
+import net.renfei.unifiauth.sdk.entity.DepartmentDetail;
 import net.renfei.unifiauth.sdk.entity.UserProfile;
 import net.renfei.unifiauth.sdk.oauth2.Scopes;
 import org.junit.jupiter.api.BeforeAll;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -59,6 +61,20 @@ public class UnifiAuthClientTest {
         }
     }
 
+    /**
+     * 使用客户端模式获取 Token
+     */
+    @Test
+    public void exchangeClientToken() {
+        AccessTokenDataObject accessTokenDataObject;
+        try {
+            accessTokenDataObject = unifiAuthClient.exchangeToken();
+            System.out.println(accessTokenDataObject);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
     //@Test
     public void queryUserInfo() {
         String code = "hhcLHsm5p7bMMH401KhV8FoFfabhDKmdGqWr0jI8gCE2gP22Y2lRokNRBpPgdSM2kf5uWnB9p4BiuxA-0nmRUb7FRCMda1ux5lFM56xserPQKdyhRA6x1dSWZv42XlWW";
@@ -67,6 +83,18 @@ public class UnifiAuthClientTest {
             accessTokenDataObject = unifiAuthClient.exchangeToken(code);
             UserProfile userProfile = unifiAuthClient.user().queryUserProfile(accessTokenDataObject.getAccessToken());
             System.out.println(userProfile);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    @Test
+    public void queryDeptTree() {
+        AccessTokenDataObject accessTokenDataObject;
+        try {
+            accessTokenDataObject = unifiAuthClient.exchangeToken();
+            List<DepartmentDetail> departmentDetails = unifiAuthClient.department().queryDeptTree(accessTokenDataObject.getAccessToken());
+            System.out.println(departmentDetails);
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }

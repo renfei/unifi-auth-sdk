@@ -2,6 +2,7 @@ package net.renfei.unifiauth.sdk;
 
 import net.renfei.unifiauth.sdk.entity.AccessTokenDataObject;
 import net.renfei.unifiauth.sdk.entity.CallbackDataObject;
+import net.renfei.unifiauth.sdk.service.DepartmentService;
 import net.renfei.unifiauth.sdk.service.UserService;
 import net.renfei.unifiauth.sdk.utils.HttpClientUtils;
 import net.renfei.unifiauth.sdk.utils.JSONUtils;
@@ -143,7 +144,45 @@ public final class UnifiAuthClient {
         }
     }
 
+    /**
+     * 使用客户端模式获取 Token
+     *
+     * @return
+     * @throws Exception
+     */
+    public AccessTokenDataObject exchangeToken() throws Exception {
+        StringBuilder url = new StringBuilder(UNIFI_AUTH_SERVER_URI);
+        if (!UNIFI_AUTH_SERVER_URI.endsWith(URI_SEPARATOR)) {
+            url.append(URI_SEPARATOR);
+        }
+        url.append("oauth2/token");
+        URI uri = new URI(url.toString());
+
+        Map<String, String> data = new HashMap<String, String>() {{
+            this.put("grant_type", "client_credentials");
+            this.put("client_id", CLIENT_ID);
+            this.put("redirect_uri", REDIRECT_URI);
+        }};
+
+        HttpClientUtils httpClientUtils = new HttpClientUtils();
+        String result = httpClientUtils.postForm(uri, CLIENT_ID, CLIENT_SECRET, data);
+        Map<String, Object> stringObjectMap = JSONUtils.json2map(result);
+        if (stringObjectMap.get("access_token") != null) {
+            return JSONUtils.json2pojo(result, AccessTokenDataObject.class);
+        } else if (stringObjectMap.get("error") != null) {
+            throw new RuntimeException(stringObjectMap.get("error").toString());
+        } else if (stringObjectMap.get("message") != null) {
+            throw new RuntimeException(stringObjectMap.get("message").toString());
+        } else {
+            throw new RuntimeException("RuntimeException: result: " + result);
+        }
+    }
+
     public UserService user() {
         return new UserService(this);
+    }
+
+    public DepartmentService department() {
+        return new DepartmentService(this);
     }
 }
