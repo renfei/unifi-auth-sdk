@@ -73,4 +73,30 @@ public class DepartmentService {
             throw new RuntimeException(apiResult.getMessage());
         }
     }
+
+    /**
+     * 根据ID查询部门详情
+     *
+     * @param token
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    public DepartmentDetail queryDept(String token, long id) throws Exception {
+        StringBuilder url = new StringBuilder(UNIFI_AUTH_CLIENT.UNIFI_AUTH_SERVER_URI);
+        if (!UNIFI_AUTH_CLIENT.UNIFI_AUTH_SERVER_URI.endsWith(UnifiAuthClient.URI_SEPARATOR)) {
+            url.append(UnifiAuthClient.URI_SEPARATOR);
+        }
+        url.append("resource/dept/").append(id);
+        URI uri = new URI(url.toString());
+        HttpClientUtils httpClientUtils = new HttpClientUtils();
+        String result = httpClientUtils.get(uri, token);
+        ApiResult<DepartmentDetail> apiResult = JSONUtils.json2pojo(result, new TypeReference<ApiResult<DepartmentDetail>>() {
+        });
+        if (apiResult.getCode() == HttpStatus.SUCCESS) {
+            return apiResult.getData();
+        } else {
+            throw new RuntimeException(apiResult.getMessage());
+        }
+    }
 }
