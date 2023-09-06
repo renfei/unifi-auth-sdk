@@ -3,10 +3,7 @@ package net.renfei.unifiauth.sdk.service;
 import com.fasterxml.jackson.core.type.TypeReference;
 import net.renfei.unifiauth.sdk.UnifiAuthClient;
 import net.renfei.unifiauth.sdk.constant.HttpStatus;
-import net.renfei.unifiauth.sdk.entity.ApiResult;
-import net.renfei.unifiauth.sdk.entity.MenuDetail;
-import net.renfei.unifiauth.sdk.entity.RoleDetail;
-import net.renfei.unifiauth.sdk.entity.UserProfile;
+import net.renfei.unifiauth.sdk.entity.*;
 import net.renfei.unifiauth.sdk.utils.HttpClientUtils;
 import net.renfei.unifiauth.sdk.utils.JSONUtils;
 
@@ -98,6 +95,31 @@ public class UserService {
         HttpClientUtils httpClientUtils = new HttpClientUtils();
         String result = httpClientUtils.get(uri, token);
         ApiResult<List<MenuDetail>> apiResult = JSONUtils.json2pojo(result, new TypeReference<ApiResult<List<MenuDetail>>>() {
+        });
+        if (apiResult.getCode() == HttpStatus.SUCCESS) {
+            return apiResult.getData();
+        } else {
+            throw new RuntimeException(apiResult.getMessage());
+        }
+    }
+
+    /**
+     * 获取用户拥有的子系统列表
+     *
+     * @param token
+     * @return
+     * @throws Exception
+     */
+    public List<ApplicationDetail> queryUserApplications(String token) throws Exception {
+        StringBuilder url = new StringBuilder(UNIFI_AUTH_CLIENT.UNIFI_AUTH_SERVER_URI);
+        if (!UNIFI_AUTH_CLIENT.UNIFI_AUTH_SERVER_URI.endsWith(UnifiAuthClient.URI_SEPARATOR)) {
+            url.append(UnifiAuthClient.URI_SEPARATOR);
+        }
+        url.append("resource/applications");
+        URI uri = new URI(url.toString());
+        HttpClientUtils httpClientUtils = new HttpClientUtils();
+        String result = httpClientUtils.get(uri, token);
+        ApiResult<List<ApplicationDetail>> apiResult = JSONUtils.json2pojo(result, new TypeReference<ApiResult<List<ApplicationDetail>>>() {
         });
         if (apiResult.getCode() == HttpStatus.SUCCESS) {
             return apiResult.getData();

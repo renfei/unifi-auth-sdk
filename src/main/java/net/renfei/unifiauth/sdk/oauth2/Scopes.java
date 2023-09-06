@@ -19,6 +19,10 @@ public final class Scopes {
      */
     public static final String MENUS = "menus";
     /**
+     * 获取用户拥有的子系统列表
+     */
+    public static final String APPLICATIONS = "applications";
+    /**
      * 查询用户资料
      */
     public static final String USER_READ = "user.read";

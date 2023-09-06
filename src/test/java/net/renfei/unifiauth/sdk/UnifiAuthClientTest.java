@@ -1,6 +1,7 @@
 package net.renfei.unifiauth.sdk;
 
 import net.renfei.unifiauth.sdk.entity.AccessTokenDataObject;
+import net.renfei.unifiauth.sdk.entity.ApplicationDetail;
 import net.renfei.unifiauth.sdk.entity.DepartmentDetail;
 import net.renfei.unifiauth.sdk.entity.UserProfile;
 import net.renfei.unifiauth.sdk.oauth2.Scopes;
@@ -41,7 +42,7 @@ public class UnifiAuthClientTest {
     public void generateAuthorizeRequestUrl() {
         Set<String> scopes = new HashSet<>();
         scopes.add(Scopes.PROFILE);
-        scopes.add(Scopes.USER_READ);
+        scopes.add(Scopes.APPLICATIONS);
         String s = unifiAuthClient.generateAuthorizeRequestUrl(scopes, "123");
         System.out.println(s);
     }
@@ -95,6 +96,20 @@ public class UnifiAuthClientTest {
             accessTokenDataObject = unifiAuthClient.exchangeToken();
             List<DepartmentDetail> departmentDetails = unifiAuthClient.department().queryDeptTree(accessTokenDataObject.getAccessToken());
             System.out.println(departmentDetails);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    @Test
+    public void queryUserApplications() {
+        String code = "rQRMDc1gP9kbgzf7ya1E_oSu16nLnWIRixNd9jwEWhR4nF8Fv6PaUUqIcBIMFz4tSnkhnl-bWe402DAPbt5pkycDlu0vFU1emQDQan-J4TQ29TOa6nqro5Hsnw-VYpyj";
+        AccessTokenDataObject accessTokenDataObject;
+        try {
+            accessTokenDataObject = unifiAuthClient.exchangeToken(code);
+            System.out.println(accessTokenDataObject);
+            List<ApplicationDetail> applicationDetails = unifiAuthClient.user().queryUserApplications(accessTokenDataObject.getAccessToken());
+            System.out.println(applicationDetails);
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
