@@ -24,6 +24,7 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -46,7 +47,7 @@ public class HttpClientUtils {
              CloseableHttpResponse response = httpClient.execute(request)) {
             HttpEntity entity = response.getEntity();
             if (entity != null) {
-                return EntityUtils.toString(entity);
+                return EntityUtils.toString(entity, StandardCharsets.UTF_8);
             } else {
                 throw new RuntimeException("response entity is null.");
             }
