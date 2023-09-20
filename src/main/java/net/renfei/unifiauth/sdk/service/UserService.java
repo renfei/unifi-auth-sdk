@@ -6,6 +6,8 @@ import net.renfei.unifiauth.sdk.constant.HttpStatus;
 import net.renfei.unifiauth.sdk.entity.*;
 import net.renfei.unifiauth.sdk.utils.HttpClientUtils;
 import net.renfei.unifiauth.sdk.utils.JSONUtils;
+import org.springframework.util.StringUtils;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
@@ -120,6 +122,55 @@ public class UserService {
         HttpClientUtils httpClientUtils = new HttpClientUtils();
         String result = httpClientUtils.get(uri, token);
         ApiResult<List<ApplicationDetail>> apiResult = JSONUtils.json2pojo(result, new TypeReference<ApiResult<List<ApplicationDetail>>>() {
+        });
+        if (apiResult.getCode() == HttpStatus.SUCCESS) {
+            return apiResult.getData();
+        } else {
+            throw new RuntimeException(apiResult.getMessage());
+        }
+    }
+
+    /**
+     * 获取用户资源列表
+     *
+     * @param username 账号
+     * @param name     名称
+     * @param phone    手机号
+     * @param email    电邮
+     * @param pages    页码
+     * @param rows     每页行数
+     * @return
+     */
+    public ListData<UserDetail> queryUserList(String token, String username, String name, String phone,
+                                              String email, Integer pages, Integer rows) throws Exception {
+        StringBuilder url = new StringBuilder(UNIFI_AUTH_CLIENT.UNIFI_AUTH_SERVER_URI);
+        if (!UNIFI_AUTH_CLIENT.UNIFI_AUTH_SERVER_URI.endsWith(UnifiAuthClient.URI_SEPARATOR)) {
+            url.append(UnifiAuthClient.URI_SEPARATOR);
+        }
+        url.append("resource/user");
+        UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromUriString(url.toString());
+        if (StringUtils.hasLength(username)) {
+            uriComponentsBuilder.queryParam("username", username);
+        }
+        if (StringUtils.hasLength(name)) {
+            uriComponentsBuilder.queryParam("name", name);
+        }
+        if (StringUtils.hasLength(phone)) {
+            uriComponentsBuilder.queryParam("phone", phone);
+        }
+        if (StringUtils.hasLength(email)) {
+            uriComponentsBuilder.queryParam("email", email);
+        }
+        if (pages != null) {
+            uriComponentsBuilder.queryParam("pages", pages);
+        }
+        if (rows != null) {
+            uriComponentsBuilder.queryParam("rows", rows);
+        }
+        URI uri = uriComponentsBuilder.build().toUri();
+        HttpClientUtils httpClientUtils = new HttpClientUtils();
+        String result = httpClientUtils.get(uri, token);
+        ApiResult<ListData<UserDetail>> apiResult = JSONUtils.json2pojo(result, new TypeReference<ApiResult<ListData<UserDetail>>>() {
         });
         if (apiResult.getCode() == HttpStatus.SUCCESS) {
             return apiResult.getData();
