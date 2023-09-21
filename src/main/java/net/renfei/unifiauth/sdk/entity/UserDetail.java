@@ -62,6 +62,8 @@ public class UserDetail implements Serializable {
     @Schema(description = "用户状态")
     private Integer userStatus;
     @Schema(description = "密码修改时间")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date passwordUpdateTime;
     @Schema(description = "保密等级")
     private SecretLevelEnum secretLevel;
