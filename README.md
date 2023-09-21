@@ -26,7 +26,7 @@
 <dependency>
     <groupId>net.renfei</groupId>
     <artifactId>unifi-auth-sdk</artifactId>
-    <version>1.5.1</version>
+    <version>1.5.2</version>
 </dependency>
 ```
 
@@ -34,7 +34,7 @@
 
 ```gradle
 dependencies{
-	implementation group: 'net.renfei', name: 'unifi-auth-sdk', version: '1.5.1'
+	implementation group: 'net.renfei', name: 'unifi-auth-sdk', version: '1.5.2'
 }
 ```
 

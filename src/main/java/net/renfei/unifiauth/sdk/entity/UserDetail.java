@@ -44,6 +44,8 @@ public class UserDetail implements Serializable {
     @Schema(description = "是否是内置用户")
     private Boolean builtInUser;
     @Schema(description = "密码过期时间")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date passwordExpirationTime;
     @Schema(description = "是否被锁定")
     private Boolean locked;
@@ -70,6 +72,8 @@ public class UserDetail implements Serializable {
     @Schema(description = "描述")
     private String description;
     @Schema(description = "生日")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date birthDay;
     @Schema(description = "职务")
     private String duty;
@@ -84,6 +88,8 @@ public class UserDetail implements Serializable {
     @Schema(description = "专业")
     private String professional;
     @Schema(description = "参加工作时间")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date workDate;
     @Schema(description = "拥有的角色列表")
     private List<RoleDetail> roleDetailList;
