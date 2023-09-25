@@ -5,6 +5,8 @@ import net.renfei.unifiauth.sdk.UnifiAuthClient;
 import net.renfei.unifiauth.sdk.constant.HttpStatus;
 import net.renfei.unifiauth.sdk.entity.ApiResult;
 import net.renfei.unifiauth.sdk.entity.DepartmentDetail;
+import net.renfei.unifiauth.sdk.entity.ListData;
+import net.renfei.unifiauth.sdk.entity.UserDetail;
 import net.renfei.unifiauth.sdk.utils.HttpClientUtils;
 import net.renfei.unifiauth.sdk.utils.JSONUtils;
 
@@ -66,6 +68,34 @@ public class DepartmentService {
         HttpClientUtils httpClientUtils = new HttpClientUtils();
         String result = httpClientUtils.get(uri, token);
         ApiResult<List<DepartmentDetail>> apiResult = JSONUtils.json2pojo(result, new TypeReference<ApiResult<List<DepartmentDetail>>>() {
+        });
+        if (apiResult.getCode() == HttpStatus.SUCCESS) {
+            return apiResult.getData();
+        } else {
+            throw new RuntimeException(apiResult.getMessage());
+        }
+    }
+
+    /**
+     * 查询指定部门下的用户列表
+     *
+     * @param token AccessToken
+     * @param id    部门ID
+     * @param pages 页码
+     * @param rows  每页容量
+     * @return
+     * @throws Exception
+     */
+    public ListData<UserDetail> queryDeptUserList(String token, long id, int pages, int rows) throws Exception {
+        StringBuilder url = new StringBuilder(UNIFI_AUTH_CLIENT.UNIFI_AUTH_SERVER_URI);
+        if (!UNIFI_AUTH_CLIENT.UNIFI_AUTH_SERVER_URI.endsWith(UnifiAuthClient.URI_SEPARATOR)) {
+            url.append(UnifiAuthClient.URI_SEPARATOR);
+        }
+        url.append("resource/dept/").append(id).append("user");
+        URI uri = new URI(url.toString());
+        HttpClientUtils httpClientUtils = new HttpClientUtils();
+        String result = httpClientUtils.get(uri, token);
+        ApiResult<ListData<UserDetail>> apiResult = JSONUtils.json2pojo(result, new TypeReference<ApiResult<ListData<UserDetail>>>() {
         });
         if (apiResult.getCode() == HttpStatus.SUCCESS) {
             return apiResult.getData();
