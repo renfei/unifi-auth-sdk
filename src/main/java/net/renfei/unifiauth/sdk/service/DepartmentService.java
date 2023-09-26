@@ -91,7 +91,7 @@ public class DepartmentService {
         if (!UNIFI_AUTH_CLIENT.UNIFI_AUTH_SERVER_URI.endsWith(UnifiAuthClient.URI_SEPARATOR)) {
             url.append(UnifiAuthClient.URI_SEPARATOR);
         }
-        url.append("resource/dept/").append(id).append("user");
+        url.append("resource/dept/").append(id).append("/user");
         URI uri = new URI(url.toString());
         HttpClientUtils httpClientUtils = new HttpClientUtils();
         String result = httpClientUtils.get(uri, token);
