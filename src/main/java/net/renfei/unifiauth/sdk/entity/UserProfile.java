@@ -33,6 +33,14 @@ public class UserProfile implements Serializable {
     @Schema(description = "用户所属部门列表")
     private List<DepartmentDetail> departments;
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -100,7 +108,8 @@ public class UserProfile implements Serializable {
     @Override
     public String toString() {
         return "UserProfile{" +
-                "username='" + username + '\'' +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
                 ", name='" + name + '\'' +
                 ", mobile='" + mobile + '\'' +
                 ", officeAddress='" + officeAddress + '\'' +
