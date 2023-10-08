@@ -14,6 +14,8 @@ import java.util.List;
 @Schema(title = "用户基础信息")
 public class UserProfile implements Serializable {
     private static final long serialVersionUID = -3316408227872898096L;
+    @Schema(description = "用户ID,Long类型")
+    private String id;
     @Schema(description = "用户名")
     private String username;
     @Schema(description = "姓名")
