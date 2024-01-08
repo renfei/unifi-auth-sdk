@@ -4,6 +4,9 @@
 [![Coverage Status](https://coveralls.io/repos/github/renfei/unifi-auth-sdk/badge.svg?branch=master)](https://coveralls.io/github/renfei/unifi-auth-sdk?branch=master)
 [![codebeat badge](https://codebeat.co/badges/96f3b052-b686-4201-b36e-5931caa68462)](https://codebeat.co/projects/github-com-renfei-unifi-auth-sdk-master)
 
+> [!CAUTION]  
+> 自2024年1月6日起，本项目源代码已交接给我司软件中心负责，代码版本可能自此分叉，本仓库代码可能已经成为历史版本，使用时请注意此次变更导致的版本不一致问题。
+
 > 此项目并非完整开源项目，此开发包是为了方便向我组织内部的统一认证平台(闭源项目)第三方对接使用的开发包。
 
 如果你对SDK需要修改，请到GitHub上Fork进行修改，然后向我提交PR请求。Gitee、GitLab均为镜像仓库，不接受任何 PR、MR 请求。
