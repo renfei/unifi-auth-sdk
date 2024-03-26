@@ -32,6 +32,8 @@ public class UserProfile implements Serializable {
     private SecretLevelEnum secretLevel;
     @Schema(description = "用户所属部门列表")
     private List<DepartmentDetail> departments;
+    @Schema(description = "用户所属角色列表")
+    private List<RoleDetail> roleDetails;
 
     public String getId() {
         return id;
@@ -105,6 +107,14 @@ public class UserProfile implements Serializable {
         this.departments = departments;
     }
 
+    public List<RoleDetail> getRoleDetails() {
+        return roleDetails;
+    }
+
+    public void setRoleDetails(List<RoleDetail> roleDetails) {
+        this.roleDetails = roleDetails;
+    }
+
     @Override
     public String toString() {
         return "UserProfile{" +
@@ -117,6 +127,7 @@ public class UserProfile implements Serializable {
                 ", gender='" + gender + '\'' +
                 ", secretLevel=" + secretLevel +
                 ", departments=" + departments +
+                ", roleDetails=" + roleDetails +
                 '}';
     }
 }
