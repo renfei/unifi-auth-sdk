@@ -54,7 +54,7 @@
         <lang3.version>3.12.0</lang3.version>
         <httpclient.version>4.5.14</httpclient.version>
         <springdoc.version>1.7.0</springdoc.version>
-        <jackson.version>2.15.0</jackson.version>
+        <jackson.version>2.18.6</jackson.version>
     </properties>
 
     <dependencies>
